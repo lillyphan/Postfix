@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Postfix {
-
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         Stack<Integer> stack = new Stack<>();
@@ -22,7 +21,20 @@ public class Postfix {
                     stack.push(Integer.parseInt(e));
                 }
                 catch (NumberFormatException n) {
-                    //detect operand and pop
+                    if (!(stack.isEmpty() || stack.top().getChild() == null)) {
+                        int x = stack.pop();
+                        int y = stack.pop();
+                        switch (e) {
+                            case "+" -> stack.push(x + y);
+                            case "-" -> stack.push(x - y);
+                            case "*" -> stack.push(x * y);
+                            case "/" -> stack.push(x / y);
+                            default -> {}
+                        }
+                    } else {
+                        System.out.println("Not enough operands");
+                        break;
+                    }
                 }
             }
 
